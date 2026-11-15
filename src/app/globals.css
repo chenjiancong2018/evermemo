@@ -1,0 +1,335 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f8f7f3;
+  --surface: #ffffff;
+  --foreground: #252525;
+  --muted: #858585;
+  --border: #eae8e1;
+  --accent: #777d66;
+  --accent-soft: #e9ebe3;
+  --danger: #b65f55;
+  --warning: #a8763e;
+  --code-bg: #f0efe9;
+  --pre-bg: #2d2d2a;
+  --pre-fg: #e8e6df;
+  --quote-fg: #555555;
+  /* Tailwind 透明度修饰符用的 RGB 通道形式 */
+  --background-rgb: 248 247 243;
+  --surface-rgb: 255 255 255;
+  --foreground-rgb: 37 37 37;
+  --muted-rgb: 133 133 133;
+  --border-rgb: 234 232 225;
+  --accent-rgb: 119 125 102;
+  --accent-soft-rgb: 233 235 227;
+  --danger-rgb: 182 95 85;
+  --warning-rgb: 168 118 62;
+  color-scheme: light;
+}
+
+/* 深色模式：温暖的夜间色调（不冷、不刺眼） */
+:root[data-theme='dark'] {
+  --background: #171612;
+  --surface: #201f1a;
+  --foreground: #ece9e1;
+  --muted: #9b978c;
+  --border: #34322b;
+  --accent: #a8ae91;
+  --accent-soft: #2c2f25;
+  --danger: #d08076;
+  --warning: #c9a267;
+  --code-bg: #2a2924;
+  --pre-bg: #121110;
+  --pre-fg: #e6e3da;
+  --quote-fg: #b8b4a9;
+  --background-rgb: 23 22 18;
+  --surface-rgb: 32 31 26;
+  --foreground-rgb: 236 233 225;
+  --muted-rgb: 155 151 140;
+  --border-rgb: 52 50 43;
+  --accent-rgb: 168 174 145;
+  --accent-soft-rgb: 44 47 37;
+  --danger-rgb: 208 128 118;
+  --warning-rgb: 201 162 103;
+  color-scheme: dark;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Segoe UI',
+    -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  font-feature-settings: 'kern';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+/* 细滚动条 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@layer components {
+  .card {
+    @apply bg-surface rounded-2xl border border-border;
+  }
+
+  .input-base {
+    @apply w-full rounded-xl border border-border bg-surface px-3.5 py-2.5 text-[15px] text-foreground
+      outline-none transition-colors
+      focus:border-accent focus:ring-2 focus:ring-accent/15;
+  }
+  .input-base::placeholder {
+    color: rgb(133 133 133 / 0.7);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-[14px] font-medium
+      transition-all select-none disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98];
+  }
+  .btn-primary {
+    @apply btn bg-accent text-white hover:bg-accent/90 shadow-sm;
+  }
+  .btn-secondary {
+    @apply btn bg-accent-soft text-accent hover:bg-accent/15;
+  }
+  .btn-ghost {
+    @apply btn text-muted hover:bg-foreground/5 hover:text-foreground;
+  }
+  .btn-danger {
+    @apply btn bg-danger/10 text-danger hover:bg-danger/20;
+  }
+}
+
+/* Markdown 正文排版 */
+.md-body {
+  line-height: 1.85;
+  word-break: break-word;
+}
+.md-body h1,
+.md-body h2,
+.md-body h3 {
+  font-weight: 600;
+  margin: 1.4em 0 0.6em;
+  line-height: 1.4;
+}
+.md-body h1 {
+  font-size: 1.5em;
+}
+.md-body h2 {
+  font-size: 1.3em;
+}
+.md-body h3 {
+  font-size: 1.15em;
+}
+.md-body p {
+  margin: 0.7em 0;
+}
+.md-body ul,
+.md-body ol {
+  padding-left: 1.4em;
+  margin: 0.7em 0;
+}
+.md-body ul {
+  list-style: disc;
+}
+.md-body ol {
+  list-style: decimal;
+}
+.md-body li {
+  margin: 0.3em 0;
+}
+.md-body blockquote {
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  padding: 0.5em 1em;
+  margin: 0.9em 0;
+  border-radius: 0 8px 8px 0;
+  color: var(--quote-fg);
+}
+.md-body code {
+  background: var(--code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 5px;
+  font-size: 0.9em;
+  font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+}
+.md-body pre {
+  background: var(--pre-bg);
+  color: var(--pre-fg);
+  padding: 1em 1.2em;
+  border-radius: 12px;
+  overflow-x: auto;
+  margin: 0.9em 0;
+  font-size: 0.88em;
+  line-height: 1.6;
+}
+.md-body pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+.md-body img {
+  border-radius: 12px;
+  max-width: 100%;
+  margin: 0.6em 0;
+}
+.md-body a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.md-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5em 0;
+}
+.md-body table {
+  border-collapse: collapse;
+  margin: 0.9em 0;
+  width: 100%;
+}
+.md-body th,
+.md-body td {
+  border: 1px solid var(--border);
+  padding: 0.45em 0.8em;
+  text-align: left;
+}
+.md-body th {
+  background: var(--accent-soft);
+}
+
+/* 瀑布流 */
+.masonry {
+  columns: 2;
+  column-gap: 16px;
+}
+.masonry > * {
+  break-inside: avoid;
+  margin-bottom: 16px;
+}
+@media (min-width: 768px) {
+  .masonry {
+    columns: 3;
+  }
+}
+@media (min-width: 1100px) {
+  .masonry {
+    columns: 4;
+  }
+}
+
+/* 动画 */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in {
+  animation: fade-in 0.25s ease both;
+}
+.animate-slide-up {
+  animation: slide-up 0.3s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+/* 骨架屏 */
+.skeleton {
+  background: linear-gradient(90deg, #eeede7 25%, #f6f5f1 50%, #eeede7 75%);
+  background-size: 200% 100%;
+  animation: skeleton-wave 1.4s ease infinite;
+  border-radius: 8px;
+}
+@keyframes skeleton-wave {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 隐藏 number input 微调钮 */
+input[type='date']::-webkit-calendar-picker-indicator,
+input[type='time']::-webkit-calendar-picker-indicator {
+  opacity: 0.55;
+}
+
+/* ============ 打印样式（纪念册导出 PDF 用） ============ */
+@media print {
+  aside,
+  nav,
+  .no-print,
+  .mobile-nav,
+  .app-bottom-nav {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+  }
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+  .card {
+    border: none !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+  .album-page {
+    display: block !important;
+  }
+  .album-photos {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+  }
+  .album-photo {
+    break-inside: avoid;
+  }
+  .album-photo img {
+    max-height: 220px !important;
+  }
+  .album-entry {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+}
